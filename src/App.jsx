@@ -1,8 +1,8 @@
-// src/App.js
+// src/App.jsx
 import React, { useState } from 'react';
-import HomeForm from './HomeForm';
-import QuestionForm from './QuestionForm';
-import Result from './Result';
+import HomeForm from './components/HomeForm';
+import QuestionForm from './components/QuestionForm';
+import Result from './components/Result';
 
 function App() {
   const [formData, setFormData] = useState({ name: '', category: '', difficulty: '' });
@@ -20,17 +20,13 @@ function App() {
         `https://opentdb.com/api.php?amount=1&category=${data.category}&difficulty=${data.difficulty}&type=multiple`
       );
       const json = await response.json();
-      console.log("API Response:", json);
-
       if (json.response_code !== 0 || !json.results[0]) {
         setApiError('No question returned. Try different options.');
         return;
       }
-
       setQuestionData(json.results[0]);
       setStep(2);
     } catch (err) {
-      console.error("Error fetching question:", err);
       setApiError('Failed to fetch question. Check your connection.');
     }
   };
@@ -83,4 +79,3 @@ function App() {
 }
 
 export default App;
-
